@@ -55,7 +55,7 @@ class Glass:
 
 
 class GlassDefaultArg:
-    def __init__(self, occupied_volume):
+    def __init__(self, occupied_volume=0):
         if isinstance(occupied_volume, (int, float)):
             self.occupied_volume = occupied_volume
         else:
@@ -80,7 +80,29 @@ class GlassDefaultArg:
 #    Опишите результат.
 #    Подсказка: можно ли использовать для аргументов по умолчанию изменяемые типы?
   
- 
+
+class GlassDefaultListArg:
+    def __init__(self, capacity_volume, occupied_volume=[]):
+
+        # if occupied_volume is None:
+        #     self.occupied_volume = []
+
+        self.capacity_volume = capacity_volume
+        self.occupied_volume = occupied_volume
+        """Изменяется для всех объектов класса, это нарушает принцип ООП"""
+        self.occupied_volume.append(capacity_volume)
+
+
+#if __name__ == "__main__":
+#    glass1 = GlassDefaultListArg(100)
+#    print(glass1.occupied_volume)
+#    glass2 = GlassDefaultListArg(200)
+#    print(glass2.occupied_volume)
+#    glass3 = GlassDefaultListArg(300)
+#    print(glass3.occupied_volume)
+#    print(f'Glass 1: {glass1.occupied_volume}')
+#    print(f'Glass 2: {glass2.occupied_volume}')
+#    print(f'Glass 3: {glass3.occupied_volume}')
 
 
 # 5. Создайте класс GlassAddRemove, добавьте методы add_water, remove_water
@@ -89,6 +111,50 @@ class GlassDefaultArg:
 #    Убедитесь, что методы правильно изменяют атрибут occupied_volume.
 
 
+class GlassAddRemove:
+    def __init__(self, capacity_volume, occupied_volume):
+
+        if not isinstance(capacity_volume, (int, float)):
+            raise TypeError("Вы ввели не цифровое значение")
+        if not isinstance(occupied_volume, (int, float)):
+            raise TypeError("Вы ввели не цифровое значение")
+
+        if occupied_volume > capacity_volume:
+            raise ValueError("Вы ввели значение наполнения стакана больше, чем объем стакана")
+        if capacity_volume < 0:
+            raise ValueError("Вы ввели значение наполнения стакана меньше 0")
+
+        self.capacity_volume = capacity_volume
+        self.occupied_volume = occupied_volume
+
+
+    def add_water(self, add_volume):
+        if isinstance(add_volume, (int, float)):
+            self.occupied_volume += add_volume
+        else:
+            raise TypeError("Вы ввели не цифровое значение")
+        if self.occupied_volume > self.capacity_volume:
+            self.occupied_volume = self.capacity_volume
+            raise ValueError("Ваш стакан полон")
+
+    def remove(self, remove_volume):
+        if isinstance(remove_volume, (int, float)):
+            self.occupied_volume -= remove_volume
+        else:
+            raise TypeError("Вы ввели не цифровое значение")
+        if self.occupied_volume <= 0:
+            self.occupied_volume = 0
+            raise ValueError("Ваш стакан пуст")
+
+
+#if __name__ == "__main__":
+#    glass1 = GlassAddRemove(100, 50)
+#    print(glass1.capacity_volume, glass1.occupied_volume)
+#    glass1.add_water(30)
+#    print(glass1.capacity_volume, glass1.occupied_volume)
+#    glass1.remove(70)
+#    print(glass1.capacity_volume, glass1.occupied_volume)
+
 
 # 6. Создайте три объекта типа GlassAddRemove, 
 #    вызовите функцию dir для трёх объектов и для класса GlassAddRemove.
@@ -96,6 +162,18 @@ class GlassDefaultArg:
 #    б. Проверьте тип созданного объекта.
 
 
+#if __name__ == "__main__":
+#    glass1 = GlassAddRemove(100, 50)
+#    glass2 = GlassAddRemove(200, 100)
+#    glass3 = GlassAddRemove(300, 150)
+#    print(dir(glass1))
+#    print(dir(glass2))
+#    print(dir(glass3))
+#    print(dir(GlassAddRemove))
+#    print(type(glass1))
+#    print(type(glass2))
+#    print(type(glass3))
+#    print(type(GlassAddRemove))
 
 
 # ---------------------------------------------------------------------------------------------
@@ -110,31 +188,43 @@ class GlassDefaultArg:
 # 8. Создайте три объекта Glass. (стр. 27)
 #    Получите id для каждого объекта с соответсвующим id переменной self.
 
-
+if __name__ == "__main__":
+    glass1 = Glass(100, 100)
+    glass2 = Glass(200, 100)
+    glass3 = Glass(300, 100)
+    print(id(glass1))
+    print(id(glass2))
+    print(id(glass3))
+    print(hex(id(glass1)))
+    print(hex(id(glass2)))
+    print(hex(id(glass1)))
 
 # 9. Корректно ли следующее объявление класса с точки зрения:
 #     - интерпретатора Python;
 #     - соглашения о стиле кодирования
 #    Запустите код.
 
+
 class d:
-	def __init__(f, a=2):
-		f.a = a
-		
-	def print_me(p):
-		print(p.a)
-		
+    def __init__(f, a=2):
+        f.a = a
+
+    def print_me(p):
+        print(p.a)
+
+
 d.print_me(d())		
+
 
 # 10. Исправьте
 class A:
-	def __init__(self, a):
-		if 10 < a < 50:
-			return
-		self.a = a;	
+    def __init__(self, a):
+        if 10 < a < 50:
+            return
+        self.a = a;
 
 # Объясните так реализовывать __init__ нельзя?
-		
+
         
         
         
