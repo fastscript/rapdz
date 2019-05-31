@@ -127,24 +127,27 @@ class GlassAddRemove:
         self.capacity_volume = capacity_volume
         self.occupied_volume = occupied_volume
 
-
     def add_water(self, add_volume):
-        if isinstance(add_volume, (int, float)):
-            self.occupied_volume += add_volume
-        else:
+
+        if not isinstance(add_volume, (int, float)):
             raise TypeError("Вы ввели не цифровое значение")
-        if self.occupied_volume > self.capacity_volume:
+
+        if self.occupied_volume + add_volume > self.capacity_volume:
             self.occupied_volume = self.capacity_volume
             raise ValueError("Ваш стакан полон")
 
+        self.occupied_volume += add_volume
+
     def remove(self, remove_volume):
-        if isinstance(remove_volume, (int, float)):
-            self.occupied_volume -= remove_volume
-        else:
+
+        if not isinstance(remove_volume, (int, float)):
             raise TypeError("Вы ввели не цифровое значение")
-        if self.occupied_volume <= 0:
-            self.occupied_volume = 0
-            raise ValueError("Ваш стакан пуст")
+
+        if self.occupied_volume - remove_volume <= 0:
+                 self.occupied_volume = 0
+                 raise ValueError("Ваш стакан пуст")
+
+        self.occupied_volume -= remove_volume
 
 
 #if __name__ == "__main__":
