@@ -17,20 +17,21 @@
 
 class Glass:
     def __init__(self, capacity_volume, occupied_volume):
-        if isinstance(capacity_volume, (int, float)):
-            self.capacity_volume = capacity_volume
-        else:
+
+        if not isinstance(capacity_volume, (int, float)):
             raise TypeError("Вы ввели не цифровое значение")
-        if isinstance(occupied_volume, (int, float)):
-            self.occupied_volume = occupied_volume
-        else:
+        if not isinstance(occupied_volume, (int, float)):
             raise TypeError("Вы ввели не цифровое значение")
+
         if occupied_volume > capacity_volume:
-            self.occupied_volume = capacity_volume
             raise ValueError("Вы ввели значение наполнения стакана больше, чем объем стакана")
         if capacity_volume < 0:
-            self.capacity_volume = 0
             raise ValueError("Вы ввели значение наполнения стакана меньше 0")
+        """print(dir(self))"""
+        self.capacity_volume = capacity_volume
+        """print(dir(self))"""
+        self.occupied_volume = occupied_volume
+        """print(dir(self))"""
 
 
 # 2. Создайте два и более объектов типа Glass
@@ -56,13 +57,14 @@ class Glass:
 
 class GlassDefaultArg:
     def __init__(self, occupied_volume=0):
-        if isinstance(occupied_volume, (int, float)):
-            self.occupied_volume = occupied_volume
-        else:
+
+        if not isinstance(occupied_volume, (int, float)):
             raise TypeError("Вы ввели не цифровое значение")
+
         if occupied_volume < 0:
-            self.occupied_volume = 0
             raise ValueError("Вы ввели значение наполнения стакана меньше 0")
+
+        self.occupied_volume = occupied_volume
 
 
 #if __name__ == "__main__":
@@ -186,25 +188,28 @@ class GlassAddRemove:
 #    в середине __init__ и в конце __init__, (стр. 28-30)
 #    а также после создания объекта.
 #    Опишите результат.
+#    По мере прохождения строк кода в __init__ создаются новые переменные(атрибуты) класса
 
 
 # 8. Создайте три объекта Glass. (стр. 27)
 #    Получите id для каждого объекта с соответсвующим id переменной self.
 
-if __name__ == "__main__":
-    glass1 = Glass(100, 100)
-    glass2 = Glass(200, 100)
-    glass3 = Glass(300, 100)
-    print(id(glass1))
-    print(id(glass2))
-    print(id(glass3))
-    print(hex(id(glass1)))
-    print(hex(id(glass2)))
-    print(hex(id(glass1)))
+#if __name__ == "__main__":
+#    glass1 = Glass(100, 100)
+#    glass2 = Glass(200, 100)
+#    glass3 = Glass(300, 100)
+#    print(id(glass1))
+#    print(id(glass2))
+#    print(id(glass3))
+#    print(hex(id(glass1)))
+#    print(hex(id(glass2)))
+#    print(hex(id(glass1)))
 
 # 9. Корректно ли следующее объявление класса с точки зрения:
 #     - интерпретатора Python;
+#     Да, верно, не обязательно использовать self
 #     - соглашения о стиле кодирования
+#     Нет, нужно использовать self
 #    Запустите код.
 
 
@@ -216,18 +221,20 @@ class d:
         print(p.a)
 
 
-d.print_me(d())		
+#d.print_me(d())
 
 
 # 10. Исправьте
 class A:
     def __init__(self, a):
-        if 10 < a < 50:
-            return
-        self.a = a;
+
+        if not 10 < a < 50:
+            raise ValueError()
+
+        self.a = a
 
 # Объясните так реализовывать __init__ нельзя?
-
+# __init__ необходим для объявления атрибутов класса, а не для работы как классическая функция
         
         
         
