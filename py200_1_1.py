@@ -240,22 +240,37 @@ class A:
         
 # 11. Циклическая зависимость (стр. 39-44)
 # 
+import weakref
 
 class Node:
-    def __init__(self, prev=None, next_=None):
-        self.__prev = prev
-        self.__next = next_
-    def set_next(self, next_):
-        self.__next = next_
+    def __init__(self, data=None, prev_node=None, next_node=None):
+        self.data = data
+        self.__prev_node = prev_node
+        self.__next_node = next_node
 
-    def set_prev(self, prev):
-        self.__prev = prev
-        
+    @property
+    def next_node(self):
+        return self.__next_node
+
+    @next_node.setter
+    def next_node(self, next_node):
+        self.__next_node = next_node
+
+    @property
+    def prev_node(self):
+        return self.__prev_node() if self.__prev_node is not None else None
+
+    @prev_node.setter
+    def prev_node(self, prev_node):
+        self.__prev_node = weakref.ref(prev_node) if self.__prev_node is not None else None
+
     def __str__(self):
-        ...
+        return Node(self.data)
         
     def __repr__(self):
-        ...
+        return f'Node(self.data!r)'
+
+
 
 class LinkedList:
 
@@ -292,27 +307,3 @@ class LinkedList:
         
     def delete(self, index):
         ...
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
