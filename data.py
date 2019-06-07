@@ -133,7 +133,6 @@ class Date:
     def day_counter(date1):
         return date1.__year * 365 + date1.month * 30 + date1.day
 
-
     @staticmethod
     def date2_date1(date2, date1):
         return Date.day_counter(date2) - Date.day_counter(date1)
